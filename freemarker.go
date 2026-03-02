@@ -7,7 +7,11 @@
 //	out, err := freemarker.ParseToJavaLikeAST(src)
 package freemarker
 
-import "github.com/weaweawe01/freemarker-ast/internal/astdump"
+import (
+	"github.com/weaweawe01/freemarker-ast/internal/ast"
+	"github.com/weaweawe01/freemarker-ast/internal/astdump"
+	"github.com/weaweawe01/freemarker-ast/internal/parser"
+)
 
 // ParseToJavaLikeAST parses a FreeMarker template source string and returns
 // the AST in the Java-like textual format used by the freemarker-core library.
@@ -25,4 +29,13 @@ import "github.com/weaweawe01/freemarker-ast/internal/astdump"
 //	fmt.Print(out)
 func ParseToJavaLikeAST(src string) (string, error) {
 	return astdump.ParseToJavaLikeAST(src)
+}
+
+// 开放Parse 函数，供外部调用
+func Parse(src string) (*ast.Root, error) {
+	root, err := parser.Parse(src)
+	if err != nil {
+		return nil, err
+	}
+	return root, nil
 }

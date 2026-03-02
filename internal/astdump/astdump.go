@@ -100,31 +100,6 @@ func topLevelRenderableNodes(nodes []ast.Node) []ast.Node {
 	return out
 }
 
-func hasTopLevelNonWhitespaceText(nodes []ast.Node) bool {
-	for _, n := range nodes {
-		txt, ok := n.(*ast.Text)
-		if !ok {
-			continue
-		}
-		if strings.TrimSpace(txt.Value) != "" {
-			return true
-		}
-	}
-	return false
-}
-
-func shouldSuppressTopWhitespace(nodes []ast.Node) bool {
-	if hasTopLevelNonWhitespaceText(nodes) {
-		return false
-	}
-	for _, n := range nodes {
-		if isStripDirectiveNode(n) {
-			return true
-		}
-	}
-	return false
-}
-
 func writeNode(b *strings.Builder, n ast.Node, indent int) {
 	switch x := n.(type) {
 	case *ast.Text:
@@ -452,38 +427,6 @@ func keepTrailingTopLevelWhitespace(prev ast.Node) bool {
 func writeNodes(b *strings.Builder, nodes []ast.Node, indent int) {
 	for _, child := range nodes {
 		writeNode(b, child, indent)
-	}
-}
-
-func writeNodesDropWhitespace(b *strings.Builder, nodes []ast.Node, indent int) {
-	for _, child := range nodes {
-		if txt, ok := child.(*ast.Text); ok {
-			if strings.TrimSpace(txt.Value) == "" {
-				continue
-			}
-			value := txt.Value
-			value = strings.TrimPrefix(value, "\n")
-			value = strings.TrimSuffix(value, "    ")
-			if value != txt.Value {
-				writeNode(b, &ast.Text{Value: value}, indent)
-				continue
-			}
-		}
-		writeNode(b, child, indent)
-	}
-}
-
-func writeNodesDropLeadingWhitespace(b *strings.Builder, nodes []ast.Node, indent int) {
-	start := 0
-	for start < len(nodes) {
-		if txt, ok := nodes[start].(*ast.Text); ok && strings.TrimSpace(txt.Value) == "" {
-			start++
-			continue
-		}
-		break
-	}
-	for i := start; i < len(nodes); i++ {
-		writeNode(b, nodes[i], indent)
 	}
 }
 
