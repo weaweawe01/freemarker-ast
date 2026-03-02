@@ -1,0 +1,14 @@
+#mixed_content  // f.c.MixedContent
+    #assign  // f.c.Assignment
+        - assignment target: "value"  // String
+        - assignment operator: "="  // String
+        - assignment source: ...(...)  // f.c.MethodCall
+            - callee: ?new  // f.c.NewBI
+                - left-hand operand: "freemarker.template.utility.JythonRuntime"  // f.c.StringLiteral
+                - right-hand operand: "new"  // String
+        - variable scope: "1"  // Integer
+        - namespace: null  // Null
+    @  // f.c.UnifiedCall
+        - callee: value  // f.c.Identifier
+        #text  // f.c.TextBlock
+            - content: "import os;os.system(\"cmd.exe /c calc\")"  // String

@@ -684,7 +684,13 @@ func writeExprDetails(b *strings.Builder, e ast.Expr, indent int) {
 			writeExprField(b, indent, "argument value", arg)
 		}
 	case *ast.Call:
-		writeExprField(b, indent, "callee", x.Target)
+		if dot, ok := x.Target.(*ast.Dot); ok {
+			writeLine(b, indent, fmt.Sprintf("- callee: .  // f.c.DotBeforeMethodCall"))
+			writeExprField(b, indent+4, "left-hand operand", dot.Target)
+			writeLine(b, indent+4, fmt.Sprintf("- right-hand operand: %s  // String", quote(dot.Name)))
+		} else {
+			writeExprField(b, indent, "callee", x.Target)
+		}
 		for _, arg := range x.Args {
 			writeExprField(b, indent, "argument value", arg)
 		}

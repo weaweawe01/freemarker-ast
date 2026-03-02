@@ -1,0 +1,16 @@
+#mixed_content  // f.c.MixedContent
+    #assign  // f.c.Assignment
+        - assignment target: "ccc"  // String
+        - assignment operator: "="  // String
+        - assignment source: ...(...)  // f.c.MethodCall
+            - callee: ?new  // f.c.NewBI
+                - left-hand operand: "freemarker.template.utility.Execute"  // f.c.StringLiteral
+                - right-hand operand: "new"  // String
+        - variable scope: "1"  // Integer
+        - namespace: null  // Null
+    #text  // f.c.TextBlock
+        - content: " "  // String
+    ${...}  // f.c.DollarVariable
+        - content: ...(...)  // f.c.MethodCall
+            - callee: ccc  // f.c.Identifier
+            - argument value: "calc"  // f.c.StringLiteral
