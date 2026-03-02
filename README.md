@@ -13,6 +13,7 @@
 go get github.com/weaweawe01/freemarker-ast
 ```
 
+
 ## 快速开始
 
 ### 解析模板并输出 AST
@@ -23,16 +24,59 @@ package main
 import (
     "fmt"
     "log"
-    "github.com/weaweawe01/freemarker-ast/internal/astdump"
+
+    freemarker "github.com/weaweawe01/freemarker-ast"
 )
 
 func main() {
     src := `<#assign x = "hello">${x?upper_case}`
-    out, err := astdump.ParseToJavaLikeAST(src)
+    out, err := freemarker.ParseToJavaLikeAST(src)
     if err != nil {
         log.Fatal(err)
     }
     fmt.Print(out)
+}
+```
+
+输出结果（与 Java FreeMarker 完全相同）：
+
+```
+#mixed_content  // f.c.MixedContent
+    #assign  // f.c.Assignment
+        - assignment target: "x"  // String
+        - assignment operator: "="  // String
+        - assignment source: "hello"  // f.c.StringLiteral
+        - variable scope: "1"  // Integer
+        - namespace: null  // Null
+    ${...}  // f.c.DollarVariable
+        - content: ?upper_case  // f.c.BuiltInsForStringsBasic$upper_caseBI
+            - left-hand operand: x  // f.c.Identifier
+            - right-hand operand: "upper_case"  // String
+```
+
+### 条件指令
+
+```go
+src := `<#if user?has_content>Hello, ${user}!</#if>`
+out, _ := freemarker.ParseToJavaLikeAST(src)
+fmt.Print(out)
+```
+
+### 列表迭代
+
+```go
+src := `<#list items as item>${item}</#list>`
+out, _ := freemarker.ParseToJavaLikeAST(src)
+fmt.Print(out)
+```
+
+### 错误处理
+
+```go
+src := `<#if unclosed`
+_, err := freemarker.ParseToJavaLikeAST(src)
+if err != nil {
+    fmt.Println("解析错误:", err)
 }
 ```
 

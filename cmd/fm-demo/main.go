@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/weaweawe01/freemarker-ast/internal/astdump"
+	"github.com/weaweawe01/freemarker-ast"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	${ex("open -a Calculator.app")};`
 
 	// src := `<#assign value="freemarker.template.utility.ObjectConstructor"?new()>${value("java.lang.ProcessBuilder","whoami").start()}`
-	out, err := astdump.ParseToJavaLikeAST(src)
+	out, err := freemarker.ParseToJavaLikeAST(src)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "parse error: %v\n", err)
 		os.Exit(1)

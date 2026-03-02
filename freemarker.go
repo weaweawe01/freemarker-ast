@@ -1,0 +1,28 @@
+// Package freemarker provides a Go implementation of the Apache FreeMarker
+// template parser, producing an AST 100% compatible with the Java reference
+// implementation (freemarker 2.3.34).
+//
+// Usage:
+//
+//	out, err := freemarker.ParseToJavaLikeAST(src)
+package freemarker
+
+import "github.com/weaweawe01/freemarker-ast/internal/astdump"
+
+// ParseToJavaLikeAST parses a FreeMarker template source string and returns
+// the AST in the Java-like textual format used by the freemarker-core library.
+//
+// The output is byte-for-byte identical to the text produced by the Java
+// FreeMarker 2.3.34 AST dump tool for the same template input.
+//
+// Example:
+//
+//	src := `<#assign x = "hello">${x?upper_case}`
+//	out, err := freemarker.ParseToJavaLikeAST(src)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	fmt.Print(out)
+func ParseToJavaLikeAST(src string) (string, error) {
+	return astdump.ParseToJavaLikeAST(src)
+}
