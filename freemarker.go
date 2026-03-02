@@ -8,6 +8,8 @@
 package freemarker
 
 import (
+	"encoding/json"
+
 	"github.com/weaweawe01/freemarker-ast/internal/ast"
 	"github.com/weaweawe01/freemarker-ast/internal/astdump"
 	"github.com/weaweawe01/freemarker-ast/internal/parser"
@@ -38,4 +40,27 @@ func Parse(src string) (*ast.Root, error) {
 		return nil, err
 	}
 	return root, nil
+}
+
+// ParseToJSON parses a FreeMarker template source string and returns
+// the AST as a pretty-printed JSON string.
+//
+// Example:
+//
+//	src := `<#assign x = "hello">${x?upper_case}`
+//	out, err := freemarker.ParseToJSON(src)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	fmt.Print(out)
+func ParseToJSON(src string) (string, error) {
+	root, err := parser.Parse(src)
+	if err != nil {
+		return "", err
+	}
+	data, err := json.MarshalIndent(root, "", "  ")
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
 }
