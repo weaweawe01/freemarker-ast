@@ -1,0 +1,908 @@
+[
+  {
+    "name": "BLANK",
+    "private": true,
+    "line": 919,
+    "order": 1
+  },
+  {
+    "name": "START_TAG",
+    "private": true,
+    "line": 921,
+    "order": 2
+  },
+  {
+    "name": "END_TAG",
+    "private": true,
+    "line": 923,
+    "order": 3
+  },
+  {
+    "name": "CLOSE_TAG1",
+    "private": true,
+    "line": 925,
+    "order": 4
+  },
+  {
+    "name": "CLOSE_TAG2",
+    "private": true,
+    "line": 927,
+    "order": 5
+  },
+  {
+    "name": "ATTEMPT",
+    "private": false,
+    "line": 932,
+    "order": 6
+  },
+  {
+    "name": "RECOVER",
+    "private": false,
+    "line": 934,
+    "order": 7
+  },
+  {
+    "name": "IF",
+    "private": false,
+    "line": 936,
+    "order": 8
+  },
+  {
+    "name": "ELSE_IF",
+    "private": false,
+    "line": 938,
+    "order": 9
+  },
+  {
+    "name": "LIST",
+    "private": false,
+    "line": 942,
+    "order": 10
+  },
+  {
+    "name": "ITEMS",
+    "private": false,
+    "line": 944,
+    "order": 11
+  },
+  {
+    "name": "SEP",
+    "private": false,
+    "line": 946,
+    "order": 12
+  },
+  {
+    "name": "FOREACH",
+    "private": false,
+    "line": 950,
+    "order": 13
+  },
+  {
+    "name": "SWITCH",
+    "private": false,
+    "line": 954,
+    "order": 14
+  },
+  {
+    "name": "CASE",
+    "private": false,
+    "line": 956,
+    "order": 15
+  },
+  {
+    "name": "ON",
+    "private": false,
+    "line": 958,
+    "order": 16
+  },
+  {
+    "name": "ASSIGN",
+    "private": false,
+    "line": 960,
+    "order": 17
+  },
+  {
+    "name": "GLOBALASSIGN",
+    "private": false,
+    "line": 962,
+    "order": 18
+  },
+  {
+    "name": "LOCALASSIGN",
+    "private": false,
+    "line": 964,
+    "order": 19
+  },
+  {
+    "name": "_INCLUDE",
+    "private": false,
+    "line": 966,
+    "order": 20
+  },
+  {
+    "name": "IMPORT",
+    "private": false,
+    "line": 968,
+    "order": 21
+  },
+  {
+    "name": "FUNCTION",
+    "private": false,
+    "line": 970,
+    "order": 22
+  },
+  {
+    "name": "MACRO",
+    "private": false,
+    "line": 972,
+    "order": 23
+  },
+  {
+    "name": "TRANSFORM",
+    "private": false,
+    "line": 974,
+    "order": 24
+  },
+  {
+    "name": "VISIT",
+    "private": false,
+    "line": 976,
+    "order": 25
+  },
+  {
+    "name": "STOP",
+    "private": false,
+    "line": 978,
+    "order": 26
+  },
+  {
+    "name": "RETURN",
+    "private": false,
+    "line": 980,
+    "order": 27
+  },
+  {
+    "name": "CALL",
+    "private": false,
+    "line": 982,
+    "order": 28
+  },
+  {
+    "name": "SETTING",
+    "private": false,
+    "line": 984,
+    "order": 29
+  },
+  {
+    "name": "OUTPUTFORMAT",
+    "private": false,
+    "line": 986,
+    "order": 30
+  },
+  {
+    "name": "AUTOESC",
+    "private": false,
+    "line": 990,
+    "order": 31
+  },
+  {
+    "name": "NOAUTOESC",
+    "private": false,
+    "line": 994,
+    "order": 32
+  },
+  {
+    "name": "COMPRESS",
+    "private": false,
+    "line": 998,
+    "order": 33
+  },
+  {
+    "name": "COMMENT",
+    "private": false,
+    "line": 1000,
+    "order": 34
+  },
+  {
+    "name": "TERSE_COMMENT",
+    "private": false,
+    "line": 1004,
+    "order": 35
+  },
+  {
+    "name": "NOPARSE",
+    "private": false,
+    "line": 1006,
+    "order": 36
+  },
+  {
+    "name": "END_IF",
+    "private": false,
+    "line": 1012,
+    "order": 37
+  },
+  {
+    "name": "END_LIST",
+    "private": false,
+    "line": 1014,
+    "order": 38
+  },
+  {
+    "name": "END_ITEMS",
+    "private": false,
+    "line": 1016,
+    "order": 39
+  },
+  {
+    "name": "END_SEP",
+    "private": false,
+    "line": 1018,
+    "order": 40
+  },
+  {
+    "name": "END_RECOVER",
+    "private": false,
+    "line": 1020,
+    "order": 41
+  },
+  {
+    "name": "END_ATTEMPT",
+    "private": false,
+    "line": 1022,
+    "order": 42
+  },
+  {
+    "name": "END_FOREACH",
+    "private": false,
+    "line": 1024,
+    "order": 43
+  },
+  {
+    "name": "END_LOCAL",
+    "private": false,
+    "line": 1028,
+    "order": 44
+  },
+  {
+    "name": "END_GLOBAL",
+    "private": false,
+    "line": 1030,
+    "order": 45
+  },
+  {
+    "name": "END_ASSIGN",
+    "private": false,
+    "line": 1032,
+    "order": 46
+  },
+  {
+    "name": "END_FUNCTION",
+    "private": false,
+    "line": 1034,
+    "order": 47
+  },
+  {
+    "name": "END_MACRO",
+    "private": false,
+    "line": 1036,
+    "order": 48
+  },
+  {
+    "name": "END_OUTPUTFORMAT",
+    "private": false,
+    "line": 1038,
+    "order": 49
+  },
+  {
+    "name": "END_AUTOESC",
+    "private": false,
+    "line": 1042,
+    "order": 50
+  },
+  {
+    "name": "END_NOAUTOESC",
+    "private": false,
+    "line": 1046,
+    "order": 51
+  },
+  {
+    "name": "END_COMPRESS",
+    "private": false,
+    "line": 1050,
+    "order": 52
+  },
+  {
+    "name": "END_TRANSFORM",
+    "private": false,
+    "line": 1052,
+    "order": 53
+  },
+  {
+    "name": "END_SWITCH",
+    "private": false,
+    "line": 1054,
+    "order": 54
+  },
+  {
+    "name": "ELSE",
+    "private": false,
+    "line": 1056,
+    "order": 55
+  },
+  {
+    "name": "BREAK",
+    "private": false,
+    "line": 1058,
+    "order": 56
+  },
+  {
+    "name": "CONTINUE",
+    "private": false,
+    "line": 1060,
+    "order": 57
+  },
+  {
+    "name": "SIMPLE_RETURN",
+    "private": false,
+    "line": 1062,
+    "order": 58
+  },
+  {
+    "name": "HALT",
+    "private": false,
+    "line": 1064,
+    "order": 59
+  },
+  {
+    "name": "FLUSH",
+    "private": false,
+    "line": 1066,
+    "order": 60
+  },
+  {
+    "name": "TRIM",
+    "private": false,
+    "line": 1068,
+    "order": 61
+  },
+  {
+    "name": "LTRIM",
+    "private": false,
+    "line": 1070,
+    "order": 62
+  },
+  {
+    "name": "RTRIM",
+    "private": false,
+    "line": 1072,
+    "order": 63
+  },
+  {
+    "name": "NOTRIM",
+    "private": false,
+    "line": 1074,
+    "order": 64
+  },
+  {
+    "name": "DEFAUL",
+    "private": false,
+    "line": 1076,
+    "order": 65
+  },
+  {
+    "name": "SIMPLE_NESTED",
+    "private": false,
+    "line": 1078,
+    "order": 66
+  },
+  {
+    "name": "NESTED",
+    "private": false,
+    "line": 1080,
+    "order": 67
+  },
+  {
+    "name": "SIMPLE_RECURSE",
+    "private": false,
+    "line": 1082,
+    "order": 68
+  },
+  {
+    "name": "RECURSE",
+    "private": false,
+    "line": 1084,
+    "order": 69
+  },
+  {
+    "name": "FALLBACK",
+    "private": false,
+    "line": 1086,
+    "order": 70
+  },
+  {
+    "name": "ESCAPE",
+    "private": false,
+    "line": 1088,
+    "order": 71
+  },
+  {
+    "name": "END_ESCAPE",
+    "private": false,
+    "line": 1090,
+    "order": 72
+  },
+  {
+    "name": "NOESCAPE",
+    "private": false,
+    "line": 1092,
+    "order": 73
+  },
+  {
+    "name": "END_NOESCAPE",
+    "private": false,
+    "line": 1096,
+    "order": 74
+  },
+  {
+    "name": "UNIFIED_CALL",
+    "private": false,
+    "line": 1100,
+    "order": 75
+  },
+  {
+    "name": "UNIFIED_CALL_END",
+    "private": false,
+    "line": 1102,
+    "order": 76
+  },
+  {
+    "name": "FTL_HEADER",
+    "private": false,
+    "line": 1104,
+    "order": 77
+  },
+  {
+    "name": "TRIVIAL_FTL_HEADER",
+    "private": false,
+    "line": 1106,
+    "order": 78
+  },
+  {
+    "name": "UNKNOWN_DIRECTIVE",
+    "private": false,
+    "line": 1111,
+    "order": 79
+  },
+  {
+    "name": "STATIC_TEXT_WS",
+    "private": false,
+    "line": 1183,
+    "order": 80
+  },
+  {
+    "name": "STATIC_TEXT_NON_WS",
+    "private": false,
+    "line": 1185,
+    "order": 81
+  },
+  {
+    "name": "STATIC_TEXT_FALSE_ALARM",
+    "private": false,
+    "line": 1187,
+    "order": 82
+  },
+  {
+    "name": "DOLLAR_INTERPOLATION_OPENING",
+    "private": false,
+    "line": 1189,
+    "order": 83
+  },
+  {
+    "name": "HASH_INTERPOLATION_OPENING",
+    "private": false,
+    "line": 1191,
+    "order": 84
+  },
+  {
+    "name": "SQUARE_BRACKET_INTERPOLATION_OPENING",
+    "private": false,
+    "line": 1193,
+    "order": 85
+  },
+  {
+    "name": "ESCAPED_CHAR",
+    "private": true,
+    "line": 1223,
+    "order": 86
+  },
+  {
+    "name": "STRING_LITERAL",
+    "private": false,
+    "line": 1232,
+    "order": 87
+  },
+  {
+    "name": "RAW_STRING",
+    "private": false,
+    "line": 1246,
+    "order": 88
+  },
+  {
+    "name": "FALSE",
+    "private": false,
+    "line": 1248,
+    "order": 89
+  },
+  {
+    "name": "TRUE",
+    "private": false,
+    "line": 1250,
+    "order": 90
+  },
+  {
+    "name": "INTEGER",
+    "private": false,
+    "line": 1252,
+    "order": 91
+  },
+  {
+    "name": "DECIMAL",
+    "private": false,
+    "line": 1254,
+    "order": 92
+  },
+  {
+    "name": "DOT",
+    "private": false,
+    "line": 1256,
+    "order": 93
+  },
+  {
+    "name": "DOT_DOT",
+    "private": false,
+    "line": 1258,
+    "order": 94
+  },
+  {
+    "name": "DOT_DOT_LESS",
+    "private": false,
+    "line": 1260,
+    "order": 95
+  },
+  {
+    "name": "DOT_DOT_ASTERISK",
+    "private": false,
+    "line": 1262,
+    "order": 96
+  },
+  {
+    "name": "BUILT_IN",
+    "private": false,
+    "line": 1264,
+    "order": 97
+  },
+  {
+    "name": "EXISTS",
+    "private": false,
+    "line": 1266,
+    "order": 98
+  },
+  {
+    "name": "EQUALS",
+    "private": false,
+    "line": 1268,
+    "order": 99
+  },
+  {
+    "name": "DOUBLE_EQUALS",
+    "private": false,
+    "line": 1270,
+    "order": 100
+  },
+  {
+    "name": "NOT_EQUALS",
+    "private": false,
+    "line": 1272,
+    "order": 101
+  },
+  {
+    "name": "PLUS_EQUALS",
+    "private": false,
+    "line": 1274,
+    "order": 102
+  },
+  {
+    "name": "MINUS_EQUALS",
+    "private": false,
+    "line": 1276,
+    "order": 103
+  },
+  {
+    "name": "TIMES_EQUALS",
+    "private": false,
+    "line": 1278,
+    "order": 104
+  },
+  {
+    "name": "DIV_EQUALS",
+    "private": false,
+    "line": 1280,
+    "order": 105
+  },
+  {
+    "name": "MOD_EQUALS",
+    "private": false,
+    "line": 1282,
+    "order": 106
+  },
+  {
+    "name": "PLUS_PLUS",
+    "private": false,
+    "line": 1284,
+    "order": 107
+  },
+  {
+    "name": "MINUS_MINUS",
+    "private": false,
+    "line": 1286,
+    "order": 108
+  },
+  {
+    "name": "LESS_THAN",
+    "private": false,
+    "line": 1288,
+    "order": 109
+  },
+  {
+    "name": "LESS_THAN_EQUALS",
+    "private": false,
+    "line": 1290,
+    "order": 110
+  },
+  {
+    "name": "ESCAPED_GT",
+    "private": false,
+    "line": 1292,
+    "order": 111
+  },
+  {
+    "name": "ESCAPED_GTE",
+    "private": false,
+    "line": 1294,
+    "order": 112
+  },
+  {
+    "name": "LAMBDA_ARROW",
+    "private": false,
+    "line": 1296,
+    "order": 113
+  },
+  {
+    "name": "PLUS",
+    "private": false,
+    "line": 1298,
+    "order": 114
+  },
+  {
+    "name": "MINUS",
+    "private": false,
+    "line": 1300,
+    "order": 115
+  },
+  {
+    "name": "TIMES",
+    "private": false,
+    "line": 1302,
+    "order": 116
+  },
+  {
+    "name": "DOUBLE_STAR",
+    "private": false,
+    "line": 1304,
+    "order": 117
+  },
+  {
+    "name": "ELLIPSIS",
+    "private": false,
+    "line": 1306,
+    "order": 118
+  },
+  {
+    "name": "DIVIDE",
+    "private": false,
+    "line": 1308,
+    "order": 119
+  },
+  {
+    "name": "PERCENT",
+    "private": false,
+    "line": 1310,
+    "order": 120
+  },
+  {
+    "name": "AND",
+    "private": false,
+    "line": 1312,
+    "order": 121
+  },
+  {
+    "name": "OR",
+    "private": false,
+    "line": 1314,
+    "order": 122
+  },
+  {
+    "name": "EXCLAM",
+    "private": false,
+    "line": 1316,
+    "order": 123
+  },
+  {
+    "name": "COMMA",
+    "private": false,
+    "line": 1318,
+    "order": 124
+  },
+  {
+    "name": "SEMICOLON",
+    "private": false,
+    "line": 1320,
+    "order": 125
+  },
+  {
+    "name": "COLON",
+    "private": false,
+    "line": 1322,
+    "order": 126
+  },
+  {
+    "name": "OPEN_BRACKET",
+    "private": false,
+    "line": 1324,
+    "order": 127
+  },
+  {
+    "name": "CLOSE_BRACKET",
+    "private": false,
+    "line": 1329,
+    "order": 128
+  },
+  {
+    "name": "OPEN_PAREN",
+    "private": false,
+    "line": 1355,
+    "order": 129
+  },
+  {
+    "name": "CLOSE_PAREN",
+    "private": false,
+    "line": 1361,
+    "order": 130
+  },
+  {
+    "name": "OPENING_CURLY_BRACKET",
+    "private": false,
+    "line": 1370,
+    "order": 131
+  },
+  {
+    "name": "CLOSING_CURLY_BRACKET",
+    "private": false,
+    "line": 1375,
+    "order": 132
+  },
+  {
+    "name": "IN",
+    "private": false,
+    "line": 1386,
+    "order": 133
+  },
+  {
+    "name": "AS",
+    "private": false,
+    "line": 1388,
+    "order": 134
+  },
+  {
+    "name": "USING",
+    "private": false,
+    "line": 1390,
+    "order": 135
+  },
+  {
+    "name": "ID",
+    "private": false,
+    "line": 1392,
+    "order": 136
+  },
+  {
+    "name": "OPEN_MISPLACED_INTERPOLATION",
+    "private": false,
+    "line": 1409,
+    "order": 137
+  },
+  {
+    "name": "NON_ESCAPED_ID_START_CHAR",
+    "private": true,
+    "line": 1425,
+    "order": 138
+  },
+  {
+    "name": "ESCAPED_ID_CHAR",
+    "private": true,
+    "line": 1562,
+    "order": 139
+  },
+  {
+    "name": "ID_START_CHAR",
+    "private": true,
+    "line": 1564,
+    "order": 140
+  },
+  {
+    "name": "ASCII_DIGIT",
+    "private": true,
+    "line": 1566,
+    "order": 141
+  },
+  {
+    "name": "DIRECTIVE_END",
+    "private": false,
+    "line": 1571,
+    "order": 142
+  },
+  {
+    "name": "EMPTY_DIRECTIVE_END",
+    "private": false,
+    "line": 1584,
+    "order": 143
+  },
+  {
+    "name": "NATURAL_GT",
+    "private": false,
+    "line": 1609,
+    "order": 144
+  },
+  {
+    "name": "NATURAL_GTE",
+    "private": false,
+    "line": 1611,
+    "order": 145
+  },
+  {
+    "name": "TERMINATING_WHITESPACE",
+    "private": false,
+    "line": 1616,
+    "order": 146
+  },
+  {
+    "name": "TERMINATING_EXCLAM",
+    "private": false,
+    "line": 1621,
+    "order": 147
+  },
+  {
+    "name": "TERSE_COMMENT_END",
+    "private": false,
+    "line": 1626,
+    "order": 148
+  },
+  {
+    "name": "MAYBE_END",
+    "private": false,
+    "line": 1637,
+    "order": 149
+  },
+  {
+    "name": "KEEP_GOING",
+    "private": false,
+    "line": 1653,
+    "order": 150
+  },
+  {
+    "name": "LONE_LESS_THAN_OR_DASH",
+    "private": false,
+    "line": 1655,
+    "order": 151
+  }
+]
