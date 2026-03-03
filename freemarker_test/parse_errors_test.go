@@ -2,6 +2,7 @@ package freemarker_test
 
 import (
 	"testing"
+	"time"
 
 	"github.com/weaweawe01/freemarker-ast/internal/parser"
 )
@@ -13,6 +14,25 @@ func mustFailParse(t *testing.T, name, src string) {
 	_, err := parser.Parse(src)
 	if err == nil {
 		t.Errorf("%s: expected parse error but got nil for input: %q", name, src)
+	}
+}
+
+// mustFailParseWithin asserts parse fails and does not hang beyond timeout.
+func mustFailParseWithin(t *testing.T, name, src string, timeout time.Duration) {
+	t.Helper()
+	done := make(chan error, 1)
+	go func() {
+		_, err := parser.Parse(src)
+		done <- err
+	}()
+
+	select {
+	case err := <-done:
+		if err == nil {
+			t.Errorf("%s: expected parse error but got nil for input: %q", name, src)
+		}
+	case <-time.After(timeout):
+		t.Fatalf("%s: parse timeout after %s, possible infinite loop; input=%q", name, timeout, src)
 	}
 }
 
@@ -249,4 +269,9 @@ func TestParseErrors_Miscellaneous(t *testing.T) {
 			mustFailParse(t, tc.name, tc.src)
 		})
 	}
+}
+
+func TestParseErrors_InvalidEscapedIdentifier_NoHang(t *testing.T) {
+	src := `${ux;\J}`
+	mustFailParseWithin(t, "invalid_escaped_identifier_no_hang", src, 300*time.Millisecond)
 }

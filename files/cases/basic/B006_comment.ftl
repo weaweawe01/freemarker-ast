@@ -1,0 +1,2 @@
+<#-- basic comment -->
+ok

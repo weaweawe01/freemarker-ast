@@ -127,29 +127,6 @@ ${byte}, </#list>]`
 	}
 }
 
-func TestAnalyzeRisk_ApiResourceRead_PasswdChain22(t *testing.T) {
-	src := `<#assign is=object?api.class.getResourceAsStream("/Test.class")>
-FILE:[<#list 0..999999999 as _>
-    <#assign byte=is.read()>
-    <#if byte == -1>
-        <#break>
-    </#if>
-${byte}, </#list>]
-<#assign uri=object?api.class.getResource("/").toURI()>
-<#assign input=uri?api.create("file:///etc/passwd").toURL().openConnection()>
-<#assign is=input?api.getInputStream()>
-FILE:[<#list 0..999999999 as _>
-    <#assign byte=is.read()>
-    <#if byte == -1>
-        <#break>
-    </#if>
-${byte}, </#list>]`
-	report, err := freemarker.AnalyzeRisk(src)
-	if err != nil {
-		t.Fatalf("AnalyzeRisk returned error: %v", err)
-	}
-	fmt.Println(report.TotalScore)
-}
 func TestAnalyzeRisk_MaliciousClassAtLeast1002(t *testing.T) {
 	src := `<#assign value="freemarker.template.utility.Execute"?new()>${value("calc")}`
 	report, _ := freemarker.AnalyzeRisk(src)

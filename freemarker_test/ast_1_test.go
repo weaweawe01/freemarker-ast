@@ -31,3 +31,7 @@ func TestRCE6(t *testing.T) {
 	runASTCaseParity(t, "rce6")
 
 }
+func TestRCE7(t *testing.T) {
+	runASTCaseParity(t, "rce7")
+
+}

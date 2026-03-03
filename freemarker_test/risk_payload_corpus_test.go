@@ -21,7 +21,6 @@ func TestAnalyzeRisk_DangerousPayloadCorpus100(t *testing.T) {
 		if report.TotalScore <= 0 {
 			t.Fatalf("dangerous payload[%d] expected score > 0, got %d\nsrc=%s", i, report.TotalScore, src)
 		}
-		fmt.Println(report.TotalScore)
 	}
 }
 
@@ -39,7 +38,6 @@ func TestAnalyzeRisk_BenignPayloadCorpus100(t *testing.T) {
 		if report.TotalScore != 0 {
 			t.Fatalf("benign payload[%d] expected score 0, got %d\nsrc=%s", i, report.TotalScore, src)
 		}
-		fmt.Println(report.TotalScore)
 	}
 }
 

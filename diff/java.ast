@@ -1,0 +1,10 @@
+#mixed_content  // f.c.MixedContent
+    ${...}  // f.c.DollarVariable
+        - content: ...(...)  // f.c.MethodCall
+            - callee: ...(...)  // f.c.MethodCall
+                - callee: ?new  // f.c.NewBI
+                    - left-hand operand: "freemarker.template.utility.Execute"  // f.c.StringLiteral
+                    - right-hand operand: "new"  // String
+            - argument value: "cat /etc/passwd"  // f.c.StringLiteral
+    #text  // f.c.TextBlock
+        - content: "}"  // String
