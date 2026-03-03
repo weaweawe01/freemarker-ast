@@ -168,6 +168,9 @@ func (l *Lexer) nextExpression() (compat.Token, error) {
 		return l.readNumber(begin), nil
 	}
 	if isIDStart(l.peekByte()) {
+		if l.peekByte() == '\\' && (l.offset+1 >= len(l.src) || !isEscapableIDChar(l.src[l.offset+1])) {
+			return compat.Token{}, fmt.Errorf("invalid escaped identifier start %q at %d:%d", l.peekByte(), l.line, l.column)
+		}
 		return l.readIdentifierOrKeyword(begin), nil
 	}
 	if l.peekByte() == '"' || l.peekByte() == '\'' {
@@ -618,6 +621,9 @@ func (l *Lexer) matchDirectiveSimple(begin compat.Position) (compat.Token, bool)
 	if tok, ok := l.matchDirectiveKeywordCloseTag1(begin, []string{"noautoesc", "noAutoEsc"}, tokenid.TK_NOAUTOESC); ok {
 		return tok, true
 	}
+	if tok, ok := l.matchDirectiveKeywordCloseTag1(begin, []string{"compress"}, tokenid.TK_COMPRESS); ok {
+		return tok, true
+	}
 	if tok, ok := l.matchDirectiveKeywordCloseTag2(begin, []string{"return"}, tokenid.TK_SIMPLE_RETURN); ok {
 		return tok, true
 	}
@@ -736,6 +742,7 @@ func (l *Lexer) matchDirectiveEnd(begin compat.Position) (compat.Token, bool) {
 		{name: "autoEsc", kind: tokenid.TK_END_AUTOESC},
 		{name: "noautoesc", kind: tokenid.TK_END_NOAUTOESC},
 		{name: "noAutoEsc", kind: tokenid.TK_END_NOAUTOESC},
+		{name: "compress", kind: tokenid.TK_END_COMPRESS},
 		{name: "attempt", kind: tokenid.TK_END_ATTEMPT},
 		{name: "recover", kind: tokenid.TK_END_RECOVER},
 	}

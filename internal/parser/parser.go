@@ -177,6 +177,12 @@ func (p *Parser) parseNodesUntilWithOptions(stops stopSet, opts parseNodesOption
 				return nil, token{}, false, err
 			}
 			nodes = append(nodes, block)
+		case tokenid.TK_COMPRESS:
+			block, err := p.parseCompress(tok)
+			if err != nil {
+				return nil, token{}, false, err
+			}
+			nodes = append(nodes, block)
 		case tokenid.TK_ATTEMPT:
 			attempt, err := p.parseAttempt(tok)
 			if err != nil {
@@ -241,7 +247,7 @@ func (p *Parser) parseNodesUntilWithOptions(stops stopSet, opts parseNodesOption
 			return nil, token{}, false, fmt.Errorf("unexpected switch-control token: kind=%d image=%q", tok.kind, tok.image)
 		case tokenid.TK_UNIFIED_CALL_END:
 			return nil, token{}, false, fmt.Errorf("unexpected unified-call end token: kind=%d image=%q", tok.kind, tok.image)
-		case tokenid.TK_END_OUTPUTFORMAT, tokenid.TK_END_AUTOESC, tokenid.TK_END_NOAUTOESC:
+		case tokenid.TK_END_OUTPUTFORMAT, tokenid.TK_END_AUTOESC, tokenid.TK_END_NOAUTOESC, tokenid.TK_END_COMPRESS:
 			return nil, token{}, false, fmt.Errorf("unexpected escaping-control token: kind=%d image=%q", tok.kind, tok.image)
 		case tokenid.TK_RECOVER, tokenid.TK_END_RECOVER, tokenid.TK_END_ATTEMPT:
 			return nil, token{}, false, fmt.Errorf("unexpected attempt-control token: kind=%d image=%q", tok.kind, tok.image)
@@ -900,6 +906,20 @@ func (p *Parser) parseNoAutoEsc(start token) (*ast.NoAutoEsc, error) {
 		return nil, err
 	}
 	return &ast.NoAutoEsc{Children: children}, nil
+}
+
+func (p *Parser) parseCompress(start token) (*ast.Compress, error) {
+	children, stopTok, hasStop, err := p.parseNodesUntil(makeStopSet(tokenid.TK_END_COMPRESS))
+	if err != nil {
+		return nil, err
+	}
+	if !hasStop || stopTok.kind != tokenid.TK_END_COMPRESS {
+		return nil, fmt.Errorf("compress block not closed with end_compress")
+	}
+	if _, err := p.next(); err != nil {
+		return nil, err
+	}
+	return &ast.Compress{Children: children}, nil
 }
 
 func (p *Parser) parseAttempt(start token) (*ast.Attempt, error) {

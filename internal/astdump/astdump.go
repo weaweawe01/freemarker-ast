@@ -76,28 +76,15 @@ func stripLeadingASTHeaderCommentLocal(s string) string {
 
 func printASTLikeJava(root *ast.Root) string {
 	var b strings.Builder
-	nodes := topLevelRenderableNodes(root.Children)
+	nodes := root.Children
 	if len(nodes) == 1 {
-		if _, isText := nodes[0].(*ast.Text); !isText {
-			writeNode(&b, nodes[0], 0)
-			return b.String()
-		}
+		writeNode(&b, nodes[0], 0)
+		return b.String()
 	}
 
 	b.WriteString("#mixed_content  // f.c.MixedContent\n")
 	writeTopLevelNodes(&b, root.Children, 4, false)
 	return b.String()
-}
-
-func topLevelRenderableNodes(nodes []ast.Node) []ast.Node {
-	out := make([]ast.Node, 0, len(nodes))
-	for _, n := range nodes {
-		if txt, ok := n.(*ast.Text); ok && strings.TrimSpace(txt.Value) == "" {
-			continue
-		}
-		out = append(out, n)
-	}
-	return out
 }
 
 func writeNode(b *strings.Builder, n ast.Node, indent int) {
@@ -284,12 +271,19 @@ func writeNode(b *strings.Builder, n ast.Node, indent int) {
 	case *ast.NoAutoEsc:
 		writeLine(b, indent, "#noautoesc  // f.c.NoAutoEscBlock")
 		writeNodes(b, x.Children, indent+4)
+	case *ast.Compress:
+		writeLine(b, indent, "#compress  // f.c.CompressedBlock")
+		writeNodes(b, x.Children, indent+4)
 	case *ast.Attempt:
 		writeLine(b, indent, "#attempt  // f.c.AttemptBlock")
+		if x.Recover != nil {
+			writeLine(b, indent+4, "- error handler: #recover  // f.c.RecoveryBlock")
+			writeNodes(b, x.Recover, indent+8)
+		}
 		writeNodes(b, x.Attempt, indent+4)
 		if x.Recover != nil {
-			writeLine(b, indent, "#recover  // f.c.RecoveryBlock")
-			writeNodes(b, x.Recover, indent+4)
+			writeLine(b, indent+4, "#recover  // f.c.RecoveryBlock")
+			writeNodes(b, x.Recover, indent+8)
 		}
 	case *ast.Nested:
 		writeLine(b, indent, "#nested  // f.c.BodyInstruction")
@@ -401,8 +395,8 @@ func writeTopLevelNodes(b *strings.Builder, nodes []ast.Node, indent int, suppre
 			}
 			if _, prevIsComment := prev.(*ast.Comment); prevIsComment && strings.HasPrefix(txt.Value, "\n") {
 				if len(txt.Value) >= 2 && txt.Value[1] >= '0' && txt.Value[1] <= '9' {
-					// Keep numbered-line prefix like "\n12 " used by ast-1 fixtures.
-				} else {
+					// Keep numbered-line prefix like "\n12 " used by ast fixtures.
+				} else if hasMeaningfulTopLevelContentBefore(nodes, i-1) {
 					trimmed := strings.TrimPrefix(txt.Value, "\n")
 					writeNode(b, &ast.Text{Value: trimmed}, indent)
 					prev = child
@@ -422,6 +416,23 @@ func keepTrailingTopLevelWhitespace(prev ast.Node) bool {
 	default:
 		return false
 	}
+}
+
+func hasMeaningfulTopLevelContentBefore(nodes []ast.Node, end int) bool {
+	for i := 0; i < end; i++ {
+		switch n := nodes[i].(type) {
+		case *ast.Text:
+			if strings.TrimSpace(n.Value) == "" {
+				continue
+			}
+			return true
+		case *ast.Comment:
+			continue
+		default:
+			return true
+		}
+	}
+	return false
 }
 
 func writeNodes(b *strings.Builder, nodes []ast.Node, indent int) {
@@ -575,7 +586,7 @@ func splitNonEmptyLines(value string) []string {
 func isStripDirectiveNode(n ast.Node) bool {
 	switch n.(type) {
 	case *ast.Assignment, *ast.AssignBlock, *ast.Macro, *ast.Function, *ast.If,
-		*ast.Switch, *ast.OutputFormat, *ast.AutoEsc, *ast.NoAutoEsc, *ast.Attempt,
+		*ast.Switch, *ast.OutputFormat, *ast.AutoEsc, *ast.NoAutoEsc, *ast.Compress, *ast.Attempt,
 		*ast.List, *ast.Items, *ast.Sep, *ast.Return, *ast.Interpolation, *ast.UnifiedCall, *ast.Comment:
 		return true
 	default:
@@ -685,7 +696,11 @@ func writeExprDetails(b *strings.Builder, e ast.Expr, indent int) {
 		}
 	case *ast.Call:
 		if dot, ok := x.Target.(*ast.Dot); ok {
-			writeLine(b, indent, fmt.Sprintf("- callee: .  // f.c.DotBeforeMethodCall"))
+			calleeClass := "f.c.DotBeforeMethodCall"
+			if _, isIdentifierTarget := dot.Target.(*ast.Identifier); isIdentifierTarget {
+				calleeClass = "f.c.Dot"
+			}
+			writeLine(b, indent, fmt.Sprintf("- callee: .  // %s", calleeClass))
 			writeExprField(b, indent+4, "left-hand operand", dot.Target)
 			writeLine(b, indent+4, fmt.Sprintf("- right-hand operand: %s  // String", quote(dot.Name)))
 		} else {
@@ -698,13 +713,13 @@ func writeExprDetails(b *strings.Builder, e ast.Expr, indent int) {
 		writeExprField(b, indent, "left-hand operand", x.Target)
 		writeLine(b, indent, fmt.Sprintf("- right-hand operand: %s  // String", quote(x.Name)))
 	case *ast.DynamicKey:
-		writeExprField(b, indent, "target", x.Target)
-		writeExprField(b, indent, "key", x.Key)
+		writeExprField(b, indent, "left-hand operand", x.Target)
+		writeExprField(b, indent, "enclosed operand", x.Key)
 	case *ast.DefaultTo:
 		writeExprField(b, indent, "left-hand operand", x.Target)
 		writeExprField(b, indent, "right-hand operand", x.RHS)
 	case *ast.Exists:
-		writeExprField(b, indent, "operand", x.Target)
+		writeExprField(b, indent, "left-hand operand", x.Target)
 	case *ast.Parenthetical:
 		writeExprField(b, indent, "enclosed operand", x.Expr)
 	case *ast.Array:
@@ -716,8 +731,8 @@ func writeExprDetails(b *strings.Builder, e ast.Expr, indent int) {
 			if kv == nil {
 				continue
 			}
-			writeExprField(b, indent, "entry key", kv.Key)
-			writeExprField(b, indent, "entry value", kv.Value)
+			writeExprField(b, indent, "item key", kv.Key)
+			writeExprField(b, indent, "item value", kv.Value)
 		}
 	case *ast.String:
 		parts, ok := parseDynamicStringParts(x.Literal)
@@ -799,9 +814,9 @@ func exprDisplayClass(e ast.Expr) (display string, class string) {
 	case *ast.Dot:
 		return ".", "f.c.Dot"
 	case *ast.DynamicKey:
-		return "[]", "f.c.DynamicKeyName"
+		return "...[...]", "f.c.DynamicKeyName"
 	case *ast.DefaultTo:
-		return "!", "f.c.DefaultToExpression"
+		return "...!...", "f.c.DefaultToExpression"
 	case *ast.Exists:
 		return "??", "f.c.ExistsExpression"
 	case *ast.Parenthetical:
@@ -809,7 +824,7 @@ func exprDisplayClass(e ast.Expr) (display string, class string) {
 	case *ast.Array:
 		return "[...]", "f.c.ListLiteral"
 	case *ast.Map:
-		return "{}", "f.c.HashLiteral"
+		return "{...}", "f.c.HashLiteral"
 	default:
 		if e == nil {
 			return "null", "Null"

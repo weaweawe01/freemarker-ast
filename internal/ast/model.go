@@ -22,6 +22,7 @@ const (
 	NodeTypeOutputFormat  NodeType = "OutputFormat"
 	NodeTypeAutoEsc       NodeType = "AutoEsc"
 	NodeTypeNoAutoEsc     NodeType = "NoAutoEsc"
+	NodeTypeCompress      NodeType = "Compress"
 	NodeTypeAttempt       NodeType = "Attempt"
 	NodeTypeUnifiedCall   NodeType = "UnifiedCall"
 	NodeTypeComment       NodeType = "Comment"
@@ -210,6 +211,13 @@ type NoAutoEsc struct {
 }
 
 func (n *NoAutoEsc) Type() NodeType { return NodeTypeNoAutoEsc }
+
+// Compress is #compress ... </#compress>.
+type Compress struct {
+	Children []Node `json:"children,omitempty"`
+}
+
+func (n *Compress) Type() NodeType { return NodeTypeCompress }
 
 // Attempt is #attempt ... #recover ... </#attempt>.
 type Attempt struct {
