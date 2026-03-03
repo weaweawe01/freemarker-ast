@@ -8,11 +8,10 @@
 package freemarker
 
 import (
-	"encoding/json"
-
 	"github.com/weaweawe01/freemarker-ast/internal/ast"
 	"github.com/weaweawe01/freemarker-ast/internal/astdump"
 	"github.com/weaweawe01/freemarker-ast/internal/parser"
+	"github.com/weaweawe01/freemarker-ast/internal/risk"
 )
 
 // ParseToJavaLikeAST parses a FreeMarker template source string and returns
@@ -42,25 +41,25 @@ func Parse(src string) (*ast.Root, error) {
 	return root, nil
 }
 
-// ParseToJSON parses a FreeMarker template source string and returns
-// the AST as a pretty-printed JSON string.
-//
-// Example:
-//
-//	src := `<#assign x = "hello">${x?upper_case}`
-//	out, err := freemarker.ParseToJSON(src)
-//	if err != nil {
-//	    log.Fatal(err)
-//	}
-//	fmt.Print(out)
-func ParseToJSON(src string) (string, error) {
-	root, err := parser.Parse(src)
+// RiskSeverity is the textual risk level computed from risk score.
+type RiskSeverity = risk.Severity
+
+// RiskFinding is a single risk hit produced by one rule.
+type RiskFinding = risk.Finding
+
+// RiskReport is the aggregate risk analysis result.
+type RiskReport = risk.Report
+
+// AnalyzeRisk parses source and computes static risk score against the AST.
+func AnalyzeRisk(src string) (*RiskReport, error) {
+	root, err := Parse(src)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	data, err := json.MarshalIndent(root, "", "  ")
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
+	return AnalyzeRiskAST(root), nil
+}
+
+// AnalyzeRiskAST computes static risk score from an already parsed AST.
+func AnalyzeRiskAST(root *ast.Root) *RiskReport {
+	return risk.Analyze(root)
 }
