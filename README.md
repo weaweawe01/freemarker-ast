@@ -55,7 +55,7 @@ func main() {
 ```
 
 
-### AST 恶意打分 AST
+### 给恶意的AST打分
 
 ```go
 package main
